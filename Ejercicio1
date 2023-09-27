@@ -1,0 +1,62 @@
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class ej1x001 {
+	/*Codifica un programa principal main que:
+			• Lea un fichero de texto denominado entrada.txt.
+			• Cree otro fichero de texto denominado salida.txt y escriba en éste las mismas líneas del fichero
+			de entrada pero en orden inverso.*/
+
+	public static void main(String[] args) {
+		BufferedReader br = null;
+		BufferedWriter bw = null;
+		List<String> lista = new ArrayList<>();	
+
+		try {	
+			File ficheroLectura = new File("entrada.txt");
+			br = new BufferedReader(new FileReader(ficheroLectura));
+			String linea = br.readLine();
+			while(linea != null ) {
+				lista.add(0, linea);
+				linea = br.readLine();
+				
+			}System.out.println(lista);
+			
+			File ficheroSalida = new File("salida.txt");
+			bw = new BufferedWriter(new FileWriter(ficheroSalida));
+			for(int i = 0 ; i <= lista.size() -1; i++) {
+				linea = lista.get(i);
+				bw.write(linea);
+				bw.newLine();
+			}
+		}
+		catch (IOException ioe) {
+			System.out.println("Error al leer del fichero:");
+			System.out.println(ioe.getMessage());
+			ioe.printStackTrace();
+		}
+		finally {
+			if (br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if (bw != null) {
+				try {
+					bw.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+}
